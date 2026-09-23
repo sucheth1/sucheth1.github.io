@@ -1,0 +1,48 @@
+---
+title: "demographics across countries"
+format: html
+editor: visual
+---
+
+## 
+
+```{r}
+#|echo: false
+#|warning: false
+library(dplyr)
+library(tidyr)
+library(reactable)
+
+```
+
+```{r}
+df <- read.csv("http://manctsui.github.io/datasets/countries.csv")
+reactable (df, defaultPageSize=4, searchable = TRUE)
+```
+
+Net Migration
+
+::: {#fig-countries-migration}
+
+```{r}
+#| code-fold: true
+#| layout-ncol: 2
+
+least <- df |>
+  arrange(Net.migration)|>
+  head(3)|>
+  select("Most Negative Net Migration" = Country)
+reactable(least)
+
+most <- df |>
+  arrange(desc(Net.migration))|>
+  head(3)|>
+  select("Most Positive Net Migration" = Country)
+reactable(most)
+
+
+```
+
+countries with most extreme net migration
+
+:::
